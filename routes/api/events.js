@@ -1,9 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const bcrypt = require('bcryptjs')
+// const bcrypt = require('bcryptjs')
 const config = require('config')
 // Uses express-validator to check format of data adheres to specified rules
 const { checkSchema, check, validationResult } = require('express-validator')
+
+const Event = require('../../models/Event')
 
 /**
  * model for event data:
@@ -13,34 +15,46 @@ const { checkSchema, check, validationResult } = require('express-validator')
  *  "location": {
  *      "address": "string"
  *      "zip" : 5-digit int
- *      "state code": Valid state code
+ *      "state": Valid state code
  *  },
  *  "date": "YYYY/MM/DD",
  *  "start": "int",
  *  "end": "int",
- *  "type": valid type
+ *  "eventType": valid type
  *
  * }
  **/
 router.post('/', async (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
-  }
-
-  const { name, org, location, date, start, end, type } = req.body
+  const { name, org, location, date, start, end, eventType } = req.body
 
   try {
-    // TODO 1 Check if event already exists
-    // TODO 2 Save event to database
+    // TODO 1 Save event to database
+    address = location.address
+    zip = location.zip
+    state = location.state
+    thisEvent = {
+      name,
+      org,
+      address,
+      zip,
+      state,
+      date,
+      start,
+      end,
+      eventType,
+    }
+    newEvent = new Event(thisEvent)
+    await newEvent.save()
+    res.send(`Event ${name} saved`)
+    console.log(thisEvent)
   } catch (err) {
     console.log(err)
     res.status(500).send('Server error')
   }
 })
 
-router.get('/:id', (req, res) => {
-  //TODO 3 Get event based on id
+router.get('/:', (req, res) => {
+  //TODO 2 Get event based on id
 })
 
 module.exports = router
