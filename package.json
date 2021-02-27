@@ -1,0 +1,26 @@
+{
+  "name": "hackutdserver",
+  "version": "1.0.0",
+  "description": "Shelter/Food drive finding application back-end",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coolsupersquad/server.git"
+  },
+  "author": "Cool Super Squad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coolsupersquad/server/issues"
+  },
+  "homepage": "https://github.com/coolsupersquad/server#readme",
+  "dependencies": {
+    "cockroachdb": "^1.0.3",
+    "config": "^3.3.4",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.0"
+  }
+}
