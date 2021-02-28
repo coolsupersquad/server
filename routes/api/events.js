@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   let query = {}
   for (const [key, value] of Object.entries(req.query)) {
     switch (key) {
@@ -93,11 +93,20 @@ router.get('/', (req, res) => {
     }
   }
   console.log(query)
-  Event.find(query, (err, data) => {
+  await Event.find(query, (err, data) => {
     if (err) throw err
     res.json(data)
   })
   // res.send('Did it work?')
+})
+
+router.delete('/:id', async (req, res) => {
+  ID = req.params.id
+  await Event.findByIdAndDelete(ID, (err, data) => {
+    if (err) throw err
+    console.log(`Event ${ID} deleted`)
+    res.json(data)
+  })
 })
 
 module.exports = router
