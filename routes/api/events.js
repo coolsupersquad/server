@@ -35,6 +35,7 @@ router.post('/', async (req, res) => {
     start,
     end,
     eventType,
+    necessities,
   } = req.body
 
   try {
@@ -55,6 +56,9 @@ router.post('/', async (req, res) => {
       end,
       eventType,
     }
+    if (necessities) {
+      thisEvent.necessities = necessities
+    }
     newEvent = new Event(thisEvent)
     await newEvent.save()
     res.send(`Event ${name} saved`)
@@ -70,7 +74,8 @@ router.get('/', async (req, res) => {
   for (const [key, value] of Object.entries(req.query)) {
     switch (key) {
       case 'name':
-        query.name = value
+        actualName = value.replace('-', ' ')
+        query.name = actualName
         break
       case 'org':
         query.org = value
@@ -89,6 +94,9 @@ router.get('/', async (req, res) => {
         break
       case 'eventType':
         query.eventType = value
+        break
+      case 'necessities':
+        query.necessities = value
         break
     }
   }

@@ -58,6 +58,12 @@ const EventSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Event type is required'],
   },
+  necessities: [
+    {
+      type: String,
+      required: false,
+    },
+  ],
 })
 
 module.exports = Event = mongoose.model('event', EventSchema)
