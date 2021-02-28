@@ -2,6 +2,9 @@ const express = require('express')
 const connectDB = require('./config/db')
 const app = express()
 
+// stuff
+require('dotenv').config()
+
 // Connect Database
 connectDB()
 
@@ -14,3 +17,4 @@ app.use('/api/events', require('./routes/api/events'))
 
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+
