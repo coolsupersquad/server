@@ -12,11 +12,10 @@ const Event = require('../../models/Event')
  * {
  *  "name": "string",
  *  "org": "string",
- *  "location": {
- *      "address": "string"
- *      "zip" : 5-digit int
- *      "state": Valid state code
- *  },
+ *  "address": "string"
+ *  "zip" : 5-digit int
+ *  "city": string
+ *  "state": Valid state code
  *  "date": "YYYY/MM/DD",
  *  "start": "int",
  *  "end": "int",
@@ -25,19 +24,32 @@ const Event = require('../../models/Event')
  * }
  **/
 router.post('/', async (req, res) => {
-  const { name, org, location, date, start, end, eventType } = req.body
+  const {
+    name,
+    org,
+    address,
+    zip,
+    state,
+    city,
+    date,
+    start,
+    end,
+    eventType,
+  } = req.body
 
   try {
     // TODO 1 Save event to database
-    address = location.address
-    zip = location.zip
-    state = location.state
+    // address = location.address
+    // zip = location.zip
+    // state = location.state
+    // city = location.city
     thisEvent = {
       name,
       org,
       address,
       zip,
       state,
+      city,
       date,
       start,
       end,
@@ -53,8 +65,39 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.get('/:', (req, res) => {
-  //TODO 2 Get event based on id
+router.get('/', (req, res) => {
+  let query = {}
+  for (const [key, value] of Object.entries(req.query)) {
+    switch (key) {
+      case 'name':
+        query.name = value
+        break
+      case 'org':
+        query.org = value
+        break
+      case 'zip':
+        query.zip = value
+        break
+      case 'state':
+        query.state = value
+        break
+      case 'city':
+        query.city = value
+        break
+      case 'date':
+        query.date = value
+        break
+      case 'eventType':
+        query.eventType = value
+        break
+    }
+  }
+  console.log(query)
+  Event.find(query, (err, data) => {
+    if (err) throw err
+    res.json(data)
+  })
+  // res.send('Did it work?')
 })
 
 module.exports = router

@@ -30,6 +30,10 @@ const EventSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Zip code is required'],
   },
+  city: {
+    type: String,
+    required: [true, 'City is required'],
+  },
   state: {
     type: String,
     required: [true, 'State is required'],
