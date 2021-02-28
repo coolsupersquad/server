@@ -28,7 +28,7 @@ const EventSchema = new mongoose.Schema({
   },
   zip: {
     type: Number,
-    required: [true, 'Zip code is required'],
+    required: false,
   },
   city: {
     type: String,
@@ -40,7 +40,7 @@ const EventSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: [true, 'Address is required'],
+    required: false,
   },
   date: {
     type: String,
